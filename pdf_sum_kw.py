@@ -21,9 +21,9 @@ def readPDF(pdfFile):
     device = TextConverter(rsm, str, laparams=lap)
     process_pdf(rsm, device, pdfFile)
     device.close()
-    content = str.getvalue()
+    info = str.getvalue()
     str.close()
-    return content
+    return info
 
 #pdf_f = urlopen("http://www.arbowebforest.com/android/ArboWebForestUserManual.pdf")
 pdf_f = urlopen("http://www.samsontech.com/site_media/legacy_docs/H4n-manual.pdf")
