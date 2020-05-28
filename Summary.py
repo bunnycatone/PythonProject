@@ -1,45 +1,47 @@
-#spacy summary test
-
+import codecs
 import spacy
-
 import textacy.extract
 
-# Load NLP model
+#1 extract text from pdf
+from tika import parser
 
+source = parser.from_file('/home/bunny/Documents/pm_plottu/H4n-manual.pdf')
+#print(raw['content'])
+with open('file.txt', 'w') as f:
+    print(source['content'], file=f)
+
+#2 clean file
+clean_lines = []
+with open("file.txt", "r") as f:
+    lines = f.readlines()
+    clean_lines = [l.strip() for l in lines if l.strip()]
+
+with open("file.txt", "w") as f:
+    f.writelines('\n'.join(clean_lines))
+
+file = codecs.open('file.txt', encoding='utf-8')
+content = file.read()
+#print(content)
+
+#3 load nlp
 nlp = spacy.load('en_core_web_lg')
+text =nlp(content)
 
-text ="""An invoice specifies what a buyer must pay the seller 
-according to the seller’s payment terms. Payment terms indicate 
-the maximum amount of time that a buyer has to pay for the 
-goods and/or services that they have purchased from the seller.
+#4 extract semi-structured statements
 
-An invoice indicates that a buyer owes money to a seller. 
-Therefore, from a seller’s point of view, an invoice for the 
-sale of goods and/or service is called a sales invoice. From a 
-buyer’s point of view, an invoice for the cost of goods 
-and/or services rendered is called a purchase invoice.
+i="H4n"
 
-An invoice has historically been a paper document mailed 
-to the buyer, but these days sellers can request 
-payments online with electronic invoices.
+statements = textacy.extract.semistructured_statements(text,i)
 
-"""
+#5 print the results
 
-doc = nlp(text)
-
-# Extract semi-structured statements
-
-i="invoice"
-
-statements = textacy.extract.semistructured_statements(doc,i)
-
-# Print the results
-
-print("highlights of " +i)
+print("highlights of " +i +":")
 
 for statement in statements:
 
- subject, verb, fact = statement
+    subject, verb, fact = statement
 
- print(f" -{fact}")
+    print(f" ---{fact}")
+
+
 
