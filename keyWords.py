@@ -92,7 +92,6 @@ def wordinfilecount(word, corpuslist):  # files incl words count
     for i in corpuslist:
         for j in i:
             if word in set(j):
-                #if j.__contains__(word):
                 count = count+1
             else:
                 continue
