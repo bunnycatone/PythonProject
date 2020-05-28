@@ -7,7 +7,7 @@ import nltk
 import operator
 from nltk.tokenize import WordPunctTokenizer
 
-def participles(text): #sep words
+def sep(text): #sep words
     pattern = r"""(?x)               # set flag to allow verbose regexps 
               (?:[A-Z]\.)+           # abbreviations
               |\d+(?:\.\d+)?%?       # numbers like currency and percentages 
@@ -69,7 +69,7 @@ def freqWord(wordlis):  # frequency, count, return dic
 def corpus(filelist, swlist):  # words db
     alist = []
     for i in filelist:
-        withoutswlist = deleteSw(participles(read(str(i))), swlist)
+        withoutswlist = deleteSw(sep(read(str(i))), swlist)
         alist.append(withoutswlist)
     return alist
 
@@ -121,7 +121,7 @@ def main():
     outall = ''
     writeTpath = r'/home/bunny/Documents/pm_plottu/text/result/TFIDF.txt'
     for i in filelist:
-        without_swlis = deleteSw(participles(read(str(i))), swlist)   # get list except for sw
+        without_swlis = deleteSw(sep(read(str(i))), swlist)   # get list except for sw
         tfidfdic = tf_idf(without_swlis, filelist, corpuslist)        # calc TF-IDF
         titleary = str(i).split('/')
         title = str(titleary[-1]).replace('utf8.txt', '')
