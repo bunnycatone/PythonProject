@@ -47,5 +47,5 @@ Lda = gensim.models.ldamodel.LdaModel
 # train LDA model on DT matrix
 ldamodel = Lda(doc_term_matrix, num_topics=3, id2word = dictionary, passes=50)
 
-print(ldamodel.print_topics(num_topics=3, num_words=3))
+print(ldamodel.print_topics(num_topics=3, num_words=3))#set num of topics, num of words for each topic
 
